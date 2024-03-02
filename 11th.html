@@ -1,0 +1,548 @@
+<html>
+     <head>
+          <title>11th-Grade| Schedule</title>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&family=Raleway:wght@100;200;300;400&display=swap" rel="stylesheet">
+
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+          <style>
+               html{
+                    background: #333;
+                    color: #FFF;
+                    font-family: 'Cabin Sketch', cursive;
+                    font-size: 20px;
+                    text-shadow: 0px 3px 5px black;
+               }
+               table {
+                    width: 80%;
+                    margin: auto;
+                    margin-top: -0.5%;
+                    padding: 2.5px;
+
+                    border-radius: 5px;
+
+                    font-size: 20px;
+                    background-color: #222;
+               }
+               th{
+                    background-color: #555;
+               }
+               td{
+
+                    background-color: #333;
+                    transition: 0.25s;
+               }
+               th, td {
+                    width: 16%;
+                    padding: 20px;
+                    border: 1px solid #252525;
+
+                    border-radius: 2.5px;
+               }
+               tr th:first-of-type{
+                    width: 4%;
+               }
+               div{
+                    padding-top: 10px;
+                    border-radius: 5px;
+               }
+               button{
+                    background: none;
+                    padding-top: 10px;
+                    border: none;
+                    color: white;
+                    transition: 0.3s;
+                    font-family: 'Raleway', sans-serif;
+                    letter-spacing: -0.75px;
+                    text-shadow: 2px 2px 5px black;
+
+               }
+               button:hover{
+                    color: red;
+                    cursor: grab;
+
+               }
+               a{
+                    color: white;
+                    text-decoration: none;
+                    transition: 0.3s;
+               }
+               a:hover{
+                    color: red;
+                    text-decoration: underline;
+               }
+               #time{
+                    font-family: 'Raleway', sans-serif;
+                    font-size: 15px;
+               }
+               #quickAccess{
+                    margin-left: -0.25%;
+                    margin-top: 3.5%;
+                    padding: 10px;
+                    background-color: #222;
+                    position: fixed;
+               }#kaomoji{
+                    margin-left: -0.25%;
+                    margin-top: 24%;
+                    padding: 10px;
+                    background-color: #222;
+                    position: fixed;
+               }
+               .moji{
+                    padding-top: 15px;
+                    padding-bottom: 5px;
+                    cursor: pointer;
+               }
+               .moji:hover{
+                    color: red;
+               }
+               .moji div{
+                    display: none;
+                    position: absolute;
+                    top: 0px;
+                    margin-left: 25px;
+
+                    height: 264px;
+                    width: 200px;
+
+                    background-color: #222;
+                    padding: 10px;
+
+                    overflow-x: hidden;
+
+               }
+               .moji:hover div{
+                    display: block;
+                    color: white;
+               }
+               #search{
+                    position: fixed;
+                    right: 15px;
+                    top: 35px;
+
+                    padding: 1.5px;
+
+               }
+               #search form{
+                    margin: 0px;
+               }
+               #search input{
+                    background-color: #222;
+                    border: none;
+
+                    padding: 10px;
+
+                    color: white;
+                    font-family:'Raleway', sans-serif;
+               }#search button{
+                    background-color: #111;
+                    padding: 10px;
+               }#search button:hover{
+                    color: #AAA;
+                    cursor: pointer;
+               }
+          </style>
+          <script language="Javascript" type="text/javascript">
+
+               className = new Array("AP.Chem", "--", "Lifelong", "AP. US", "H.English","Spanish IV", "Orchestra","Lunch","AP. Physics","AP.CalcBC")
+               classData = new Array("Konz, 134", "Speakman, Cafe", "Daberkoe, GYM", "Smith, 104", "Houseman, 203", "Friedman, 111", "Gonzalez, 314", "--, Cafe","Buchanan, 236","Miller, 207")
+               emails = new Array("kkonz@dasd.org", "n/a","jdaberkoe@dasd.org", "stsmith@dasd.org", "jhouseman@dasd.org", "afriedman@dasd.org","stgonzalez@dasd.org", "n/a", "abuchanan@dasd.org", "dmiller@dasd.org")
+
+               classID = []
+               classID[0] = new Array("1a", "1b", "1c", "1d", "1e", "1f")
+               classID[1] = new Array("2a", "2e")
+               classID[2] = new Array("2c", "2f")
+               classID[3] = new Array("3a", "3b", "3c", "3d", "3e", "3f")
+               classID[4] = new Array("4b", "4d", "4f","4a", "4c", "4e")
+               classID[5] = new Array("5a", "5c", "5e")
+               classID[6] = new Array("5b", "5d", "5f")
+               classID[7] = new Array("6a", "6c", "6e", "6f")
+               classID[8] = new Array("7a", "6b", "7c", "6d", "7e", "7f")
+               classID[9] = new Array("8a", "8b", "8c", "8d", "8e", "8f")
+
+               pd = new Array("a","b","c","d","e","f")
+               periods = document.getElementsByTagName("tr");
+               allCell = document.getElementsByTagName("td");
+
+               dayName = new Array ("Sunday", "Monday", "Tuesday", "Wendsday", "Thursday", "Friday", "Saturday");
+               monName = new Array ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec");
+
+               mojis = new Array(
+                    new Array(
+                         "sentiment_satisfied",
+                         new Array("joy", "(o^▽^o)", "( ´ ω ` )", "(´• ω •`)", "(´｡• ᵕ •｡`)", "(´･ᴗ･ ` )", "( ˙▿˙ )", "(„• ᴗ •„)", "(ﾉ´ヮ`)ﾉ*: ･ﾟ", "( ◕▿◕ )" ,"(¯▿¯)", "☆*:.｡.o(≧▽≦)o.｡.:*☆", "°˖✧◝(⁰▿⁰)◜✧˖°"),
+                         new Array("love", "(ﾉ´ з `)ノ", "(´• ω •`) ♡", "(≧◡≦) ♡", "Σ>―(〃°ω°〃)♡→", "♡(>ᴗ•)", "(´▽`ʃ♡ƪ)"),
+                         new Array("embarressment", "(⌒_⌒;)", "(„ಡωಡ„)", "(⁄ ⁄•⁄ω⁄•⁄ ⁄)", "(ง ื▿ ื)ว", "	( 〃▽〃)", "	(⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄)", "(/▿＼ )")
+                    ),
+                    new Array(
+                         "sentiment_dissatisfied",
+                         new Array("dissatisfaction", "(；￣Д￣)", "(￢_￢;)", "ヾ( ￣O￣)ツ", "(ᗒᗣᗕ)՞", "(＞﹏＜)", "	(￣□￣ ;)","(⇀‸↼‶)", "	(눈_눈)", "	(￣ ￣|||)"),
+                         new Array("angry", "(＃`Д´)", "Σ(▼□▼ )", "(ﾉಥ益ಥ)ﾉ", "(≖､≖╬)", "(# ` ﾛ ´)凸", "＼＼٩(๑`^´๑)۶／／", "(凸ಠ益ಠ)凸", "(ノ°益°)ノ","(ง︡'-'︠)ง"),
+                         new Array("sad", "o(TヘTo)", "( ╥ω╥ )", "( ; ω ; )", "(｡•́︿•̀｡)", "(-ω-、)", "	(╯︵╰,)", "(╥﹏╥)", "(ಥ﹏ಥ)", "	.･ﾟﾟ･(／ω＼)･ﾟﾟ･", "。゜゜(´Ｏ`) ゜゜。", "｡･ﾟﾟ*(>д<)*ﾟﾟ･｡", "｡ﾟ･ (>﹏<) ･ﾟ｡", "(ಡ‸ಡ)", "(;´༎ຶД༎ຶ`)"),
+                         new Array("pain", "~(>_<~)", "٩(× ×)۶", "☆(＃××)", "_:(´ཀ`」 ∠):_", "(ﾒ﹏ﾒ)", "[ ± _ ± ]"),
+                         new Array("fear", "＼(º □ º l|l)/", "..・ヾ(。＞＜)シ", "Σ(°△°|||)︴", "〣( ºΔº )〣")
+                    ),
+                    new Array(
+                         "sentiment_neutral",
+                         new Array("indifference", "ヽ(ー_ー )ノ", "┐(￣ヘ￣)┌", "ᕕ( ᐛ )ᕗ", "┐(シ)┌", "┐( ˘ ､ ˘ )┌"),
+                         new Array("confusion", "(￣ω￣;)", "┐('～`;)┌", "(・_・;)", "(￣_￣)・・・", "Σ(￣。￣ﾉ)", "(ーー;)", "	(-_-;)・・・", "(・・ ) ?", "( ;-(ｴ)-)ゞ"),
+                         new Array ("doubt", "(￢_￢)", "(￢ ￢)", "(ᓀ ᓀ)", "(¬‿¬ )"),
+                         new Array ("surprise", "w(°ｏ°)w", "(⊙_⊙)", "(°ロ°) !", "∑(O_O;)", "( : ౦ ‸ ౦ : )", "	Σ(°ロ°)", "Σ(□_□)", "Σ(･ิ¬･ิ)")
+                    ),
+                    new Array(
+                         "mood",
+                         new Array("waving", "( ・ω・)ﾉ", "ヾ(*'▽'*)", "(￣▽￣)ノ", "~ヾ(・ω・)", "(o´▽`o)ﾉ", "(´• ω •`)ﾉ", "(￣^￣)ゞ", "ヾ(-ω-、)", "(  ╥ω╥)づ", "( 〃▽〃)ﾉ~~~"),
+                         new Array("hugging", "(づ￣ ³￣)づ", "⊂(´• ω •`⊂)", "	(つ≧▽≦)つ", "(っಠ‿ಠ)っ", "(づ ◕‿◕ )づ", "	⊂( ´ ▽ ` )⊃", "⊂(TヘT⊂ )", "(づ ╥ω╥)づ"),
+                         new Array("winking", "(｡•̀ᴗ-)✧", "	☆⌒(≧▽​° )", "	(･ω<)☆"),
+                         new Array ("apologizing", "人(_ _ )", "(シ. .)シ", "	(シ_ _)シ"),
+                         new Array ("hiding", "|･ω･)", "|д･)", "	|_￣))", "	┬┴┬┴┤( ͡° ͜ʖ├┬┴┬┴", "|▽//)", "ヾ(･|", "|_・)"),
+                         new Array ("writing", "__φ(．．;)", "__〆(￣ー￣ )"),
+                         new Array ("running", "☆ﾐ(o*･ω･)ﾉ", "ε=ε=ε=ε=┌(;￣▽￣)┘", "ε===(っ≧ω≦)っ", "	C= C= C= C= C=┌(;・ω・)┘", "ヽ(￣д￣;)ノ=3=3=3", "─=≡Σ((( つ＞＜)つ", "。。。ミヽ(。＞＜)ノ"),
+                         new Array ("sleeping", "[(－－)]..zzZ", "(＿ ＿ ) Z z z", "(￣ρ￣)..zzZZ"),
+                         new Array ("music", "♬♫♪◖(● o ●)◗♪♫♬", "ヾ(´〇`)ﾉ♪♪♪", "ヽ(o´∀`)ﾉ♪♬", "( ˘ ɜ˘) ♬♪♫", "(ˇ▽ˇ)ノ♪♬♫", "()￣▽￣)/♫•*¨*•.¸¸♪", "ヾ(⌐■_■)ノ♪", "ヘ(￣ω￣ヘ)", "(〜￣▽￣)〜", "(~‾▽‾)~", "	⁽⁽◝( • ω • )◜⁾⁾", "♪(/_ _ )/♪", "	＼(￣▽￣)＼", "~(˘▽˘)~", "	✺◟( • ω • )◞✺")
+                    ),
+                    new Array(
+                         "group",
+                         new Array("love", "(ɔˆз(ˆ⌣ˆc)♡"),
+                         new Array("sympathy", "(>_<。)ヾ(´ ▽ ` )", "ヽ(￣ω￣(。。 )ゝ", "(´-ω-`( _ _ )"),
+                         new Array("friends", "ヾ(・ω・)メ(・ω・)ノ", "｡*:☆(・ω・人・ω・)｡:゜☆｡", "(°(°ω(°ω°(☆ω☆)°ω°)ω°)°)", "＼(＾∀＾)メ(＾∀＾)ノ", "ヽ(≧◡≦)八(o^ ^o)ノ", "	o(^^o)(o^^o)(o^^o)(o^^)o", "	(((*°▽°*)八(*°▽°*)))", "	\\( ˙▿˙ )/\\( ˙▿˙ )/", "ヾ(￣ー￣(≧ω≦*)ゝ", "	Ψ( `∀)(∀´ )Ψ", "☆ヾ(*´・∀・)ﾉヾ(・∀・`*)ﾉ☆", "(☞°ヮ°)☞ ☜(°ヮ°☜)", "( °ᴗ°)~ð (/❛o❛\)"),
+                         new Array("enemies", "ヽ( ･∀･)ﾉ_θ彡☆Σ(ノ `Д´)ノ", "(҂` ﾛ ´)︻デ═一 ＼(º □ º l|l)/", "/( .□.)＼ ︵╰(°益°)╯︵ /(.□. /)", "( `⌒*)O-(`⌒´Q)", "(o¬‿¬o )...☆ﾐ(*x_x)", "(╯°Д°)╯︵ /(.□ . ＼)", "(((ง’ω’)و三 ง’ω’)ڡ≡　☆⌒ﾐ((x_x)", "( ￣ω￣)ノﾞ⌒☆ﾐ(o _ _)o", "(╬￣皿￣)=○＃(￣#)３￣)", ",,((( ￣□)_／ ＼_(○￣ ))),,", "(¬_¬'')ԅ(￣ε￣ԅ)", "	(งಠ_ಠ)ง　σ( •̀ ω •́ σ)"),
+                         new Array("eating", "(*￣▽￣)旦 且(´∀`*)", "	( *^^)o∀*∀o(^^* )")
+                    ),
+                    new Array(
+                         "add_reaction",
+                         new Array("other_Faces", "( ͡° ͜ʖ ͡°)", "(ಠ_ಠ)", "(￣﹃￣)", "(⌐■_■)", "(◕‿◕✿)","(╹ڡ╹ )","( •̀ .̫ •́ )✧","(;´༎ຶٹ༎ຶ`)", "(̶◉͛‿◉̶)"),
+                         new Array("other_Actions", "(╯°益°)╯彡┻━┻", "┬─┬ノ( º _ ºノ)", "(oT-T)尸", "(　･ω･)☞", "(　￣.)o-　　【　TV　】", "｀、ヽ｀ヽ｀、ヽ(ノ＞＜)ノ ｀、ヽ｀☂ヽ｀、ヽ", "‿︵‿︵‿︵‿ヽ(°□° )ノ︵‿︵‿︵‿︵", "( • )( • )ԅ(≖‿≖ԅ", "( ＾▽＾)っ✂╰⋃╯", "〜〜(／￣▽)／　〜ф"),
+                         new Array("other_Animals", "(=^･ω･^=)", "(=①ω①=)","\n", "(￣(ｴ)￣)", "(*￣(ｴ)￣*)", "(／￣(ｴ)￣)／","ʕ •ᴥ• ʔ", "ʕ •̀ ω •́ ʔ", "ʕ ᵔᴥᵔ ʔ", "ʕಠᴥಠʔ","\n", "/╲/\\╭(ఠఠ益ఠఠ)╮/\\╱\\", "/╲/\\( •̀ ω •́ )/\\╱\\")
+                    )
+               )
+               quickAccesses = new Array(
+                    new Array("https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox", "gmail.ico"),
+                    new Array("https://drive.google.com/drive/u/0/my-drive", "drive.png"),
+                    new Array("https://schoology.dasd.org/home", "schoology.png"),
+                    new Array("https://downingtownpa.infinitecampus.org/campus/nav-wrapper/student/portal/student/today", "infiniteCampus.ico"),
+                    new Array("https://www.dasd.org/", "dasd_logo.png")
+               )
+
+              function checkTime(i) {
+                if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                return i;
+              }
+
+              function copyEmail(i){
+                   if ((emails[i].localeCompare("n/a")) == 0){
+                        alert("No email to Copy :(")
+                   } else{
+                        navigator.clipboard.writeText(emails[i]);
+                        alert("Click OK to Copy.")
+                   }
+              }
+              function copyMoji(m, i, j){
+                   navigator.clipboard.writeText(mojis[m][i][j].toString());
+              }
+
+              var light = false
+              var current = -1;
+
+               $(document).ready(function(){
+                    announce("Loading...")
+                    highlight();
+                    makeTable();
+                    write();
+                    mojiWrite();
+                    quickAccessWrite();
+                    startTime();
+                    announce("Start Up Complete...");
+                    $("td").hover(function(){
+                              color(this.innerHTML);
+                              if (this.style.backgroundColor == "rgb(68, 68, 68)"){
+                                   light = true
+                              }else{
+                                   light = false
+                              }
+                              this.style.backgroundColor = "#555";
+                         }, function(){
+                              discolor();
+                              if (light){
+                                   this.style.backgroundColor = "#444";
+                              }else{
+                                   this.style.backgroundColor = "#333"
+                              }
+                    });
+
+
+                    function announce(x){
+                         console.log(x);
+                    }
+                    function makeTable(){
+
+                         getCells();
+                    }
+                    function getCells(){
+                         tableCells = [];
+                         for(var i = 0; i < classID.length; i++){
+                              for (var j = 0; j < classID[i].length; j++){
+                                   tableCells.push(classID[i][j]);
+                              }
+                         }
+                         return(tableCells.sort());
+                    }
+
+                    function write(){
+                         for(var i = 0; i<classID.length; i++){
+                              for (var j = 0; j<classID[i].length; j++){
+                                   document.getElementById(classID[i][j]).innerHTML =
+                                        "<b>"+className[i]+"</b></br>"+
+                                        "<button onclick='copyEmail("+i+")'>"+classData[i]+"</button>"
+                              }
+                         }
+                    }
+                    function mojiWrite(){
+                         x = "";
+                         for(var m = 0; m< mojis.length; m++){
+                              x += "<div class = 'moji'> <span class='material-symbols-outlined'>" + mojis[m][0] + "</span> <div> <p id = "+ mojis[m][0] +">"+ getMojiList(m)+"</p></div></div>";
+                         }
+                         document.getElementById("kaomoji").innerHTML = x
+                    }
+                    function getMojiList(m){
+                         x = "";
+                         for(var i = 1; i<mojis[m].length; i++){
+                              x += mojis[m][i][0] + ":<br>";
+                              for (var j = 1; j<mojis[m][i].length; j++){
+                                   x += "<button onclick='copyMoji(" +m+","+i+","+j+")'>" + mojis[m][i][j] + "</button>"
+                              }
+                              x+= "<br><br>"
+                         }
+                         return x;
+                    }
+
+                    function quickAccessWrite(){
+                         x = "";
+                         for (var i = 0; i<quickAccesses.length; i++){
+                              x +="</br><a href = '" + quickAccesses[i][0] + "'target='_blank'><img src= '" + quickAccesses[i][1] + "'width = '25px'></a></br>";
+                         }
+                         x += "</br>"
+
+                         document.getElementById("quickAccess").innerHTML = x;
+                    }
+
+                    function startTime() {
+          	          var today = new Date();
+          	          var h = today.getHours();
+          	          var m = today.getMinutes();
+          	          var s = today.getSeconds();
+          	          m = checkTime(m);
+          	          s = checkTime(s);
+          	          document.getElementById('txt').innerHTML =
+                              "<h3>"+
+                              dayName[today.getDay()]+ ", "+
+                              monName[today.getMonth()] + ". " +
+                              today.getDate()  + " " + (today.getYear()+1900)+" "+"<br>"+"<span id = 'time'>"+
+                              h + ":" + m +"."+ s+"</span>"
+          	          var t = setTimeout(startTime, 500);
+                    }
+                    // var h = 14;
+                    // var m = 0;
+                    function highlight(){
+
+                         var today = new Date();
+          	          var h = today.getHours();
+          	          var m = today.getMinutes();
+          	          m = checkTime(m);
+
+                         if(Number(m.toString())<10){
+                              m = Number(m.toString());
+                         }
+
+                         var cell = new Array();
+                         var flag = false;
+
+                         hTime = new Array(7, 8, 9, 10, 11, 12, 12, 13, 14)
+                         mTime = new Array(40, 36, 28, 20, 12, 04, 56, 48, 40)
+
+                         if ((current==-1) && (h*60)+m <= mTime[0]+(hTime[0])*60){
+                              console.log("Start Class!");
+                         }
+
+                         for(var i =0; i<8; i++){
+                              if (((h*60)+m >= (hTime[i]*60)+mTime[i])&&((h*60 )+m < (hTime[i+1]*60)+mTime[i+1])&&(current!=(i+1))){
+                                   reset();
+                                   cell = periods[i+1].getElementsByTagName("td");
+                                   current = i+1;
+                                   flag = true;
+                              }
+                         }
+
+                         if ((current!=-1) && (h*60)+m >= mTime[mTime.length-1]+(hTime[hTime.length-1])*60){
+                              console.log("Dismissal - " + h+": "+m );
+                              reset();
+                              current = -1;
+                         }
+                         if (flag){
+
+                              console.log("Period no."+ current +" - " + h+": "+m);
+                              for (var i = 0; i<6; i++){
+                                   var colorFlag = true;
+                                   for (var j = 0; j<cell.length;j++){
+                                        if (cell[j].id.localeCompare(current+pd[i])==0){
+                                             cell[j].style.backgroundColor="#444";
+                                             colorFlag = false;
+                                        }
+                                   }
+                                   if(colorFlag){
+                                        document.getElementById((current-1)+pd[i]).style.backgroundColor="#444";
+                                   }
+                              }
+                         }
+
+
+                         var tHighlight = setTimeout(highlight, 500);
+                         // m = setTimeout(sim(m), 500);
+                    }
+
+               });
+
+               colors = new Array("#F88","#FFA07A","#FFE4C4","#98FB98","#7FFFD4","#BEE","#B0C4DE","#EE82EE","#c662f5","#8c77d1")
+
+               function reset(){
+                    for (var i = 0; i<allCell.length; i++){
+                         allCell[i].style.backgroundColor="#333"
+                    }
+               }
+               // function sim(i){
+               //      i++;
+               //      return i;
+               // }
+
+               function color(text){
+                    var x =[];
+                    var xi = 0
+                    for (var i = 0; i<className.length;i++){
+                         if((text.split("</b>"))[0] == ("<b>"+className[i])){
+                              x[xi] = i;
+                              xi++;
+                         }
+                    }
+
+                    for (var j = 0; j<x.length; j++){
+                         var id = x[j]
+                         for (var i = 0; i<classID[id].length; i++){
+                              document.getElementById(classID[id][i]).style.color = colors[x[0]];
+                         }
+                    }
+
+               }
+               function discolor(){
+                    for(var i = 0; i<classID.length;i++){
+                         for(var j = 0; j<classID[i].length;j++){
+                              document.getElementById(classID[i][j]).style.color = "#FFF";
+                         }
+                    }
+               }
+
+          </script>
+     </head>
+     <body>
+          <div id = 'txt'></div>
+          <div id = 'search'>
+               <form action="http://google.com/search" target="_blank">
+                    <input type = "text" placeholder="Search..." name="q">
+                    <button type="submit" id = 'searchButton' value="Go">
+                         <i class="fa fa-search"></i>
+                    </button>
+               </form>
+          </div>
+          <div>
+               <div id = 'quickAccess'></div>
+               <div id = "kaomoji"></div>
+          </div>
+
+
+          <table id = "table">
+               <tr>
+                    <th></th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+               </tr>
+               <tr id = "1">
+                    <th>1</th>
+                    <td id = "1a">A</td>
+                    <td rowspan="2" id = "1b">B</td>
+                    <td id = "1c">C</td>
+                    <td rowspan="2" id = "1d">D</td>
+                    <td id = "1e">E</td>
+                    <td id = "1f">F</td>
+               </tr>
+               <tr id = "2">
+                    <th>2</th>
+                    <td id = "2a">A</td>
+                    <td id = "2c">C</td>
+                    <td id = "2e">E</td>
+                    <td id = "2f">F</td>
+               </tr>
+               <tr id = "3">
+                    <th>3</th>
+                    <td id = "3a">A</td>
+                    <td id = "3b">B</td>
+                    <td id = "3c">C</td>
+                    <td id = "3d">D</td>
+                    <td id = "3e">E</td>
+                    <td id = "3f">F</td>
+               </tr>
+               <tr id = "4">
+                    <th>4</th>
+                    <td id = "4a">A</td>
+                    <td id = "4b">B</td>
+                    <td id = "4c">C</td>
+                    <td id = "4d">D</td>
+                    <td id = "4e">E</td>
+                    <td id = "4f">F</td>
+               </tr>
+               <tr id = "5">
+                    <th>5</th>
+                    <td id = "5a">A</td>
+                    <td id = "5b">B</td>
+                    <td id = "5c">C</td>
+                    <td id = "5d">D</td>
+                    <td id = "5e">E</td>
+                    <td id = "5f">F</td>
+               </tr>
+               <tr id = "6">
+                    <th>6</th>
+                    <td id = "6a">A</td>
+                    <td rowspan="2" id = "6b">B</td>
+                    <td id = "6c">C</td>
+                    <td rowspan="2" id = "6d">D</td>
+                    <td id = "6e">E</td>
+                    <td id = "6f">F</td>
+               </tr>
+               <tr id = "7">
+                    <th>7</th>
+                    <td id = "7a">A</td>
+                    <td id = "7c">C</td>
+                    <td id = "7e">E</td>
+                    <td id = "7f">F</td>
+               </tr>
+               <tr id = "8">
+                    <th>8</th>
+                    <td id = "8a">A</td>
+                    <td id = "8b">B</td>
+                    <td id = "8c">C</td>
+                    <td id = "8d">D</td>
+                    <td id = "8e">E</td>
+                    <td id = "8f">F</td>
+               </tr>
+
+          </table>
+
+     </body>
+</html>
